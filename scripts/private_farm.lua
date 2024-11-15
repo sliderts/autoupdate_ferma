@@ -1,7 +1,7 @@
 local script_author = "krikkson"
 local script_name = "FermaBot"
-local script_version = "1337.1"
-print("[FermaBot] автор скрипта: " .. script_author)
+local script_version = "1337.2"
+print("[FermaBot] аватар скрипта: " .. script_author)
 print("[FermaBot] имя скрипта: " .. script_name)
 print("[FermaBot] актуальная версия скрипта: " .. script_version)
 local sampev = require("samp.events")
