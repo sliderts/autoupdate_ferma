@@ -1,3 +1,9 @@
+local script_author = "krikkson"
+local script_name = "FermaBot"
+local script_version = "1337.1"
+print("[FermaBot] автор скрипта: " .. script_author)
+print("[FermaBot] имя скрипта: " .. script_name)
+print("[FermaBot] актуальная версия скрипта: " .. script_version)
 local sampev = require("samp.events")
 local vector3d = require("vector3d")
 local router = require("router")
@@ -9,7 +15,7 @@ require("Tasking")
 local json = require 'json'
 
 answers = {
-    "ÿ òóò"
+    "я тут"
 }
 
 -- #meowprd
@@ -114,7 +120,7 @@ function floodAltOn(floodPickup)
 	else
 		flood_pickup = false
 	end
-	print("Íà÷èíàåì òàïàòü ïî ýêðàí÷èêó")
+	print("Начинаем тапать по экранчику")
 	newTask(function()
 		local x, y, z = getBotPosition()
 		--go_to({ x = x, y = y, z = z }, 6.0)
@@ -212,10 +218,10 @@ math.randomseed(os.time())
 
 
 local dialogs_raw = {
-	{ "{BFBBBA}{E88813}[2/4] Âûáåðèòå âàø ïîë", "Ìóæñêîé", 1, 0, "" },
-	{ "{BFBBBA}{E88813}[3/4] Âûáåðèòå öâåò êîæè", "{FFCC99}Ñâåòëûé", 1, random(0, 1), "" },
-	{ "{BFBBBA}[4/4] Îòêóäà âû î íàñ óçíàëè?", "Îò äðóçåé", 1, 0, "" },
-	{ "{BFBBBA}[4/4] Ââåäèòå íèê ïðèãëàñèâøåãî?", "Îò äðóçåé", 1, 1, "" },
+	{ "{BFBBBA}{E88813}[2/4] Выберите ваш пол", "Мужской", 1, 0, "" },
+	{ "{BFBBBA}{E88813}[3/4] Выберите цвет кожи", "{FFCC99}Светлый", 1, random(0, 1), "" },
+	{ "{BFBBBA}[4/4] Откуда вы о нас узнали?", "От друзей", 1, 0, "" },
+	{ "{BFBBBA}[4/4] Введите ник пригласившего?", "От друзей", 1, 1, "" },
 }
 
 function initDialogs()
@@ -309,7 +315,7 @@ function checker()
 			goto skip
 		end
 		if timeSinceQuestTake ~= -1 and os.time() - timeSinceQuestTake >= 3 then
-			print('Íå ñìîãëè îòêðûòü ìåíþ âûáîðà èíñòðóìåíòà/óðîæàÿ, òðàéíåì åùå ðàç...')
+			print('Не смогли открыть меню выбора инструмента/урожая, трайнем еще раз...')
 			timeSinceQuestTake = -1
 			sendClickTextdraw(65535, 1000)
 			floodAltOn(true)
@@ -326,7 +332,7 @@ function checker()
 			nextFarm()
 			not_quest = nil
 		--elseif status == STATUS_START and getStatusTimePassed() > 120 then
-		--	print("Íå ìîæåì çàéòè â ôåðìó")
+		--	print("Не можем зайти в ферму")
 		--	reconnect()
 		--elseif status == STATUS_GET_QUEST and os.time() - last_quest > 300 then
 		--	reconnect()
@@ -379,23 +385,23 @@ function newQuest(id, text, pos, dialog1, dialog2, bed, action, plant)
 end
 
 plants = {
-	["Ðîæü"] = {2074},
-	["Ìîðêîâü"] = {2075},
-	["Êàðòîôåëü"] = {2076},
-	["Ë¸í"] = {2077},
-	["Õëîïîê"] = {2078},
-	["Ïøåíèöà"] = {2079},
-	["Îãóðöû"] = {2080},
-	["Ïîìèäîðû"] = {2081}
-	-- Åñëè ïðèãîäèòñÿ - çàïàðèìñÿ ñ ýòèì
-	-- ["Áåëûé âèíîãðàä"] = {2071, 2074},
-	-- ["×àé"] = {2071, 2075},
-	-- ["Ïðÿíûå òðàâû"] = {2071, 2076},
-	-- ["Êàíàáèñ"] = {2071, 2077},
-	-- ["Êóêóðóçà"] = {2071, 2078},
-	-- ["Ôèîëåòîâûé âèíîãðàä"] = {2071, 2079},
-	-- ["Ëå÷åáíàÿ òðàâà"] = {2071, 2080},
-	-- ["Ïîäñîëíóõ"] = {2071, 2081}
+	["Рожь"] = {2074},
+	["Морковь"] = {2075},
+	["Картофель"] = {2076},
+	["Лён"] = {2077},
+	["Хлопок"] = {2078},
+	["Пшеница"] = {2079},
+	["Огурцы"] = {2080},
+	["Помидоры"] = {2081}
+	-- Если пригодится - запаримся с этим
+	-- ["Белый виноград"] = {2071, 2074},
+	-- ["Чай"] = {2071, 2075},
+	-- ["Пряные травы"] = {2071, 2076},
+	-- ["Канабис"] = {2071, 2077},
+	-- ["Кукуруза"] = {2071, 2078},
+	-- ["Фиолетовый виноград"] = {2071, 2079},
+	-- ["Лечебная трава"] = {2071, 2080},
+	-- ["Подсолнух"] = {2071, 2081}
 }
 
 function router.getSpecialAction()
@@ -406,11 +412,11 @@ function router.onPlay(route, loop)
  	if paused then return false end 
 end
 
-PATTERN_RAKING = { pattern = "äëÿ íà÷àëà ðîñòà íåîáõîäèìî ïðîïîëîòü", dialog1 = 1, dialog2 = 18890, action = "raking" }
-PATTERN_WATERING = { pattern = "äëÿ íà÷àëà ðîñòà íåîáõîäèìî ïîëèòü", dialog1 = 1, dialog2 = 19468, action = "watering" }
-PATTERN_HARVESTING = { pattern = "ìîæíî ñîáðàòü óðîæàé", dialog1 = 1, dialog2 = 19626, action = "harvesting" }
-PATTERN_DIGGING = { pattern = "ñâîáîäíîå ìåñòî", dialog1 = 1, dialog2 = 19626, action = "digging" }
-PATTERN_PLANTING = { pattern = "âûêîïàíà ÿìêà", dialog1 = 0, dialog2 = 19626, action = "planting" }
+PATTERN_RAKING = { pattern = "для начала роста необходимо прополоть", dialog1 = 1, dialog2 = 18890, action = "raking" }
+PATTERN_WATERING = { pattern = "для начала роста необходимо полить", dialog1 = 1, dialog2 = 19468, action = "watering" }
+PATTERN_HARVESTING = { pattern = "можно собрать урожай", dialog1 = 1, dialog2 = 19626, action = "harvesting" }
+PATTERN_DIGGING = { pattern = "свободное место", dialog1 = 1, dialog2 = 19626, action = "digging" }
+PATTERN_PLANTING = { pattern = "выкопана ямка", dialog1 = 0, dialog2 = 19626, action = "planting" }
 function findQuest(...)
 	local quests = {}
 	for id, label in pairs(labels) do
@@ -467,16 +473,16 @@ function isInAnyCar()
 end
 
 function pause()
-	print("Ïàóçà...")
+	print("Пауза...")
 	paused = os.clock()
 	if router.isReplaying() then router.stop() end
 end
 
 function resume()
-	print("Ïðîäîëæàåì ðàáîòó")
+	print("Продолжаем работу")
 	if distance_3d(vector3d(getBotPosition()), farm.ambar) > 100 then
 		reconnect()
-		print("Äàëåêî îò àìáàðà, ðåêîííåêòèìñÿ...")
+		print("Далеко от амбара, реконнектимся...")
 		return
 	end
 	setStatus(STATUS_GET_QUEST)
@@ -519,7 +525,7 @@ function onSpawn(entity)
 		print("Spawned:", entity)
 		spawned = true
 
-		--[[print("æäåì 10 ñåê è ïîðòàëèìñÿ íà ôåðìó")
+		--[[print("ждем 10 сек и порталимся на ферму")
 		newTask(function()
 			wait(10000)
 			go_to(farm.ambar, 7.0, Tasking.defer, router.play, 5000, farm_route.."ambar-main", false, function()
@@ -537,7 +543,7 @@ function onSpawn(entity)
 end
 
 function pressKey(key)
-	-- print("Òàïàåì, òàïàåì ïà ýêðàí÷èêó (àëüò):", key)
+	-- print("Тапаем, тапаем па экранчику (альт):", key)
 	forced_key = key
 	updateSync()
 end
@@ -655,9 +661,9 @@ function initNicks()
 
 	if #names > 0 and #surnames > 0 then
 		nicks_initied = true
-		print("çàãðóæåíî "..#names.." èìåí è "..#surnames.." ôàìèëèé")
+		print("загружено "..#names.." имен и "..#surnames.." фамилий")
 	else
-		print("èìåíà ("..#names..") èëè ôàìèëèè ("..#surnames..") íå çàãðóæåíû")
+		print("имена ("..#names..") или фамилии ("..#surnames..") не загружены")
 	end
 end
 
@@ -665,7 +671,7 @@ function nextFarm()
 	timeSinceQuestTake = -1
 	current_farm = current_farm + 1
 	if current_farm > #_farms then
-        sendTelegram("Çàêîí÷èëèñü ôåðìû. Íà÷èíàåì ïî íîâîé")
+        sendTelegram("Закончились фермы. Начинаем по новой")
 		current_farm = 1		
 		-- reconnect(timeout)
 		-- return
@@ -678,7 +684,7 @@ function setFarm(f)
 	_farm = f
 	farm = farms[f]
 	farm_route = f.."\\"
-	print("óñòàíîâëåíà ôåðìà", f)
+	print("установлена ферма", f)
 end
 
 function initSettings()
@@ -700,8 +706,8 @@ function initSettings()
 	tg_id = data:match("tg_id=(%d+)")
 
 	if data:match("refka=(%S+)") then
-		table.insert(dialogs_raw, { "{BFBBBA}{E88813}[4/4] Ââåäèòå íèê ïðèãëàñèâøåãî?", "Ââåäèòå íèê èãðîêà ïðèãëàñèâøåãî âàñ", 1, 1, data:match("refka=(%S+)") })
-		print("Èñïîëüçóþ ðåôåðàëà:", data:match("refka=(%S+)"))
+		table.insert(dialogs_raw, { "{BFBBBA}{E88813}[4/4] Введите ник пригласившего?", "Введите ник игрока пригласившего вас", 1, 1, data:match("refka=(%S+)") })
+		print("Использую реферала:", data:match("refka=(%S+)"))
 	end
 end
 
@@ -709,7 +715,7 @@ function sampev.onSendSpawn()
 	newTask(function()
 		wait(10000)
 		if getBotScore() >= 2 and getBotInterior() == 0 then
-			print("Ëå÷ó íà ôåðìó...")
+			print("Лечу на ферму...")
 			go_to(farm.ambar, 7.0, Tasking.defer, router.play, 5000, farm_route.."ambar-main", false, function()
 				setStatus(STATUS_START)
 				floodAltOn()
@@ -739,10 +745,10 @@ function onLoad()
 		while true do
 			if getBotScore() == 1 then
 				if x3 then 
-					setWindowTitle(format("complete quests (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Æäåì 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
+					setWindowTitle(format("complete quests (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Ждем 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
 					wait(5000)
 				else
-					setWindowTitle(format("complete quests (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Æäåì 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
+					setWindowTitle(format("complete quests (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Ждем 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
 					wait(5000)
 				end
 			else
@@ -752,7 +758,7 @@ function onLoad()
 		end
 	end)
 
-	print(format("ôåðìà: %d, ëèìèò: %d òàéìàóò: %d", _farm, limit, timeout))
+	print(format("ферма: %d, лимит: %d таймаут: %d", _farm, limit, timeout))
 	setFarm(_farm)
 	--runCommand("!autopick")
 	not_quest = nil
@@ -797,7 +803,7 @@ function rotateCharToCoord(target)
 end
 
 function go_to(target, step, func, ...)
-	--print("òïøèìñÿ íà", target.x, target.y, target.z, ":", step)
+	--print("тпшимся на", target.x, target.y, target.z, ":", step)
 	coord.step = step
 	coord.target = vector3d(target.x, target.y, target.z)
 	coord.speed = 0.7
@@ -853,7 +859,7 @@ end
 function sampev.onSetPlayerPos(pos)
 	if paused then
 		reconnect(timeout)
-		sendTelegram("ÒÏøíóëè íà ïðîâåðêå")
+		sendTelegram("ТПшнули на проверке")
 		return
 	end
 
@@ -873,19 +879,19 @@ function sampev.onSetPlayerPos(pos)
 			end
 			router.unpause()
 		end, false)
-		sendTelegram("Ñëàïíóëè, ðåêîíåê÷óñü")
+		sendTelegram("Слапнули, реконекчусь")
 		reconnect(1)
 	end
 
 	pos.x = math.floor(pos.x); pos.y = math.floor(pos.y); pos.z = math.floor(pos.z)
 
 	if pos.x == farm.main.x and pos.y == farm.main.y and pos.z == farm.main.z then
-		print("Âûøåë ñ ôåðìû")
+		print("Вышел с фермы")
 		flood_alt = false
 		setStatus(STATUS_GET_QUEST)
 		Tasking.defer(router.play, 500, farm_route.."main-ambar", false, floodAltOn)
 	elseif pos.x == 728 and pos.y == 1799 and pos.z == 1602 then
-		print("Çàøåë â ôåðìó")
+		print("Зашел в ферму")
 		flood_alt = false
 		if getStatus() == STATUS_START then
 			-- Tasking.defer(go_to, random(1500, 3000), vector3d(731.23, 1799.91, 1602.01), 0.98, Tasking.defer, floodAltOn, 1500)
@@ -901,7 +907,7 @@ function sampev.onSetPlayerPos(pos)
 			hungry = false
 			Tasking.defer(go_to, random(500, 1500), vector3d(728.62, 1796.91, 1602.00), 0.98, function()
 				for id, label in pairs(labels) do
-					if label.text == "{ffffff}Àâòîìàò ñ åäîé\n{FE9A2E}[ {ffffff}ALT {FE9A2E}]" then
+					if label.text == "{ffffff}Автомат с едой\n{FE9A2E}[ {ffffff}ALT {FE9A2E}]" then
 						Tasking.defer(go_to, 3000, vector3d(729.04, 1803.92, 1602.00), 0.98, setStatus, STATUS_EAT)
 						break
 					end
@@ -1072,18 +1078,18 @@ end
 local x3 = false
 local lvlowsedfoiwerf = 1
 function sampev.onServerMessage(color, text)
-    if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("]") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:match("Ïîçäðàâëÿþ%! Âû äîñòèãëè (%d+)%-ãî óðîâíÿ%!") then
-        local lvlowsedfoiwerf = not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("]") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:match("Ïîçäðàâëÿþ%! Âû äîñòèãëè (%d+)%-ãî óðîâíÿ%!")
+    if not text:find("говорит") and not text:find("кричит:") and not text:find("]") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:match("Поздравляю%! Вы достигли (%d+)%-го уровня%!") then
+        local lvlowsedfoiwerf = not text:find("говорит") and not text:find("кричит:") and not text:find("]") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:match("Поздравляю%! Вы достигли (%d+)%-го уровня%!")
         if tonumber(lvlowsedfoiwerf) >= 2 then
             reconnect(1)
         end
     end 
-if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("]") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("áûë äîáàâëåí ïðåäìåò 'Êóñîê ðåäêîé òêàíè'. Îòêðîéòå èíâåíòàðü, èñïîëüçóéòå êëàâèøó") then
+if not text:find("говорит") and not text:find("кричит:") and not text:find("]") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("был добавлен предмет 'Кусок редкой ткани'. Откройте инвентарь, используйте клавишу") then
     if getBotInterior() == 0 then
         tkan = tkan + 1
-        sendTelegram("Äîáûë ðåäêóþ òêàíü "..tkan.."/"..limit)
+        sendTelegram("Добыл редкую ткань "..tkan.."/"..limit)
         if tkan >= limit then
-            sendTelegram("Óñïåøíî íàôàðìèë "..tkan.." êóñêîâ ðåäêîé òêàíè")
+            sendTelegram("Успешно нафармил "..tkan.." кусков редкой ткани")
       sendTelegram("https://i.makeagif.com/media/3-03-2021/cKq5TQ.gif")
             local f = io.open(done_txt, "a")
             f:write(("%s | %s | %s | %s | %d\n"):format(getServerAddress(), getBotNick(), pass, tkan, getBotMoney()))
@@ -1097,51 +1103,51 @@ if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not te
 end
 
 
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("ýòîé ôåðìå ìîæåò ðàáîòàòü íå áîëåå 30 ÷åëîâåê") then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("этой ферме может работать не более 30 человек") then
 		if getBotInterior() == 154 then
-		sendtelegram("Íà ôåðìå óæå ðàáîòàåò 30 ÷åëîâåê, ëå÷ó íà äðóãóþ ôåðìó")
+		sendtelegram("На ферме уже работает 30 человек, лечу на другую ферму")
 		nextFarm()
 		end
 	end
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("Ïîçäðàâëÿþ! Âû äîñòèãëè 2-ãî óðîâíÿ!") then 
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("Поздравляю! Вы достигли 2-го уровня!") then 
 		newTask(function()
 			wait(2500)
-			setWindowTitle(format("completed quests (modification by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Æäåì 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
+			setWindowTitle(format("completed quests (modification by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Ждем 2LVL ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
 			end)
 		end
 
-		if text:find("^Àäìèíèñòðàòîð .-%[ID: %d+] òåëåïîðòèðîâàë âàñ íà êîîðäèíàòû: .+$") then
+		if text:find("^Администратор .-%[ID: %d+] телепортировал вас на координаты: .+$") then
 			reconnect(timeout)
-			sendTelegram("Ïèäàðàñ òïøíóë")
+			sendTelegram("Пидарас тпшнул")
 		end
-		if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("Âû íå ìîæåòå íàáðàòü âîäû áåç âåäðà! Âîçüìèòå âåäðî â àìáàðå") then --ïðîâåðêà íà áàã ñ âåäðîì
+		if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("Вы не можете набрать воды без ведра! Возьмите ведро в амбаре") then --проверка на баг с ведром
 			if getBotInterior() == 0 then
 			setStatus(STATUS_GET_QUEST)
 			router.play(farm_route.."water-ambar", false, floodAltOn)
 			--router.play(farm_route.."ambar-around", false, floodAltOn)
-			--sendTelegram("Áàã ñ âåäðîì, ðåêîíåêò")
+			--sendTelegram("Баг с ведром, реконект")
 			end
 		end
-		if text:find("^Àäìèíèñòðàòîð .-%[%d+] çàáàíèë èãðîêà "..getBotNick().."%["..getBotId().."] íà .-%. Ïðè÷èíà: .-$")
-		or text:find("^ Àäìèíèñòðàòîð .-%[%d+] çàáàíèë èãðîêà "..getBotNick().."%["..getBotId().."]%. Ïðè÷èíà: .-$") then
-			sendTelegram("Çàáàíåí")
+		if text:find("^Администратор .-%[%d+] забанил игрока "..getBotNick().."%["..getBotId().."] на .-%. Причина: .-$")
+		or text:find("^ Администратор .-%[%d+] забанил игрока "..getBotNick().."%["..getBotId().."]%. Причина: .-$") then
+			sendTelegram("Забанен")
 			reconnect(timeout)
 		end
-		if text:match("%(%( Àäìèíèñòðàòîð (%S+)%[%d+%]%:.*}(.*){") then
-			local admin, answ = text:match("%(%( Àäìèíèñòðàòîð (%S+)%[%d+%]%:.*}(.*){")
+		if text:match("%(%( Администратор (%S+)%[%d+%]%:.*}(.*){") then
+			local admin, answ = text:match("%(%( Администратор (%S+)%[%d+%]%:.*}(.*){")
 			sendAnswer(admin, answ)
 		end
-		if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("/acceptfam") then
+		if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("/acceptfam") then
 			sendInput('/acceptfam')
 		end
-		if text:match("A%: (%S+) îòâåòèë âàì%:.*} (.*)$") then
-			local admin, answ = text:match("A%: (%S+) îòâåòèë âàì%:.*} (.*)$") 
+		if text:match("A%: (%S+) ответил вам%:.*} (.*)$") then
+			local admin, answ = text:match("A%: (%S+) ответил вам%:.*} (.*)$") 
 			sendAnswer(admin, answ)
 	end
 
 	if paused then return end
 
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("^%[Èíôîðìàöèÿ] {ffffff}Âû íà÷àëè ðàáîòó íà ôåðìå ¹%d+$") then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("^%[Информация] {ffffff}Вы начали работу на ферме №%d+$") then
 		if getBotInterior() == 154 then
 		newTask(function()
 		coordStart(728.12957763672, 1804.7136230469, 1602.0047607422, 30, 2, false)
@@ -1149,21 +1155,21 @@ end
 		router.play("main-around-exit", false, floodAltOn)
 	end)
 end
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("^%[Èíôîðìàöèÿ] {ffffff}Âû çàâåðøèëè ðàáîòó íà ôåðìå ¹%d+$") then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("^%[Информация] {ffffff}Вы завершили работу на ферме №%d+$") then
 		if getBotInterior() == 154 then
 		floodAltOn()
 		end
 	end
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Èíôîðìàöèÿ] {ffffff}Âû âçÿëè èíñòðóìåíò: Âåäðî" then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Информация] {ffffff}Вы взяли инструмент: Ведро" then
 		if getBotInterior() == 0 then
 		if not checkQuest() then floodAltOn() return end
 		router.play(farm_route.."ambar-water", false, floodAltOn)
 	end
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Èíôîðìàöèÿ] {ffffff}Íå îòõîäèòå ñ ýòîãî ìåñòà ïîêà íàáèðàåòñÿ âîäà â âåäðî." then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Информация] {ffffff}Не отходите с этого места пока набирается вода в ведро." then
 		if getBotInterior() == 0 then
 		flood_alt = false
 	end
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Èíôîðìàöèÿ] {ffffff}Âû íàáðàëè ïîëíîå âåäðî âîäû." then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Информация] {ffffff}Вы набрали полное ведро воды." then
 		if getBotInterior() == 0 then
 		if not checkQuest() then router.play(farm_route.."water-ambar", false, floodAltOn) return end
 
@@ -1172,7 +1178,7 @@ end
 		end)
 	end
 		-- Tasking.defer(go_to, random(500, 1500), quest.pos, 0.98, setStatus, STATUS_GET_WORK)
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Èíôîðìàöèÿ] {ffffff}Âû âçÿëè èíñòðóìåíò: Ëîïàòà" or text == "[Èíôîðìàöèÿ] {ffffff}Âû âçÿëè èíñòðóìåíò: Ãðàáëè" or text:find("^%[Èíôîðìàöèÿ] {ffffff}Âû âçÿëè ñàæåíåö: .-$") then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Информация] {ffffff}Вы взяли инструмент: Лопата" or text == "[Информация] {ffffff}Вы взяли инструмент: Грабли" or text:find("^%[Информация] {ffffff}Вы взяли саженец: .-$") then
 		if getBotInterior() == 0 then
 		flood_alt = false
 		if not checkQuest() then floodAltOn() return end
@@ -1181,40 +1187,40 @@ end
 
 		-- Tasking.defer(go_to, random(500, 1500), quest.pos, 0.98, setStatus, STATUS_GET_WORK)
 	end
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Îøèáêà] {ffffff}Òàêîãî èíñòðóìåíòà íåò â àìáàðå." or text == "[Îøèáêà] {ffffff}Òàêîãî ñàæåíöà íåò â àìáàðå." then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Ошибка] {ffffff}Такого инструмента нет в амбаре." or text == "[Ошибка] {ffffff}Такого саженца нет в амбаре." then
 		actions[quest.action][quest.plant] = false
 		setStatus(STATUS_GET_QUEST)
 		floodAltOn()
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("Òóò óæå ðàáîòàåò äðóãîé èãðîê") then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("Тут уже работает другой игрок") then
 		if getBotInterior() == 0 then	
 		flood_alt = false
 		setStatus(STATUS_GET_QUEST)
 		Tasking.defer(router.play, random(100, 300), farm_route.."beds\\"..quest.bed.."-bed-ambar", false, floodAltOn)
 		end
 	end
-	if quest and not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("^%[Îøèáêà] {ffffff}Ñåé÷àñ íåò çàäàíèé ") and quest.action ~= "digging" then
+	if quest and not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("^%[Ошибка] {ffffff}Сейчас нет заданий ") and quest.action ~= "digging" then
 		flood_alt = false
 		actions[quest.action][quest.plant] = false
 		setStatus(STATUS_GET_QUEST)
 		router.play(farm_route.."beds\\"..quest.bed.."-bed-ambar", false, floodAltOn)
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Îøèáêà] {ffffff}Âû íå ìîæåòå ðàáîòàòü, òàê êàê âëàäåëüöó ýòîé ôåðìû íå÷åì îïëà÷èâàòü âàøó ðàáîòó." then
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Ошибка] {ffffff}Вы не можете работать, так как владельцу этой фермы нечем оплачивать вашу работу." then
 		nextFarm()
 		-- reconnect(600000)
-		-- sendTelegram(format("Ó ôåðìû %d íåò äåíåã\n%s\n%s\n$%d", _farm, getServerAddress(), getBotNick(), salary))
-	elseif not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text == "[Îøèáêà] {ffffff}Â áî÷êå ìàëî âîäû." then
+		-- sendTelegram(format("У фермы %d нет денег\n%s\n%s\n$%d", _farm, getServerAddress(), getBotNick(), salary))
+	elseif not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text == "[Ошибка] {ffffff}В бочке мало воды." then
 		if getBotInterior() == 0 then
 		nextFarm()
-		-- sendTelegram(format("Íà ôåðìå %d íåò âîäû\n%s\n%s\n$%d", _farm, getServerAddress(), getBotNick(), salary))
+		-- sendTelegram(format("На ферме %d нет воды\n%s\n%s\n$%d", _farm, getServerAddress(), getBotNick(), salary))
 		end
 	end
-	if text:find("^%[Îøèáêà%] {ffffff}Ó âàñ íåò äîñòóïà ê ýòîìó àìáàðó%, òàê êàê âû íå ðàáîòàåòå íà ýòîé ôåðìå è íå å¸ âëàäåëåö%.") then
+	if text:find("^%[Ошибка%] {ffffff}У вас нет доступа к этому амбару%, так как вы не работаете на этой ферме и не её владелец%.") then
 		reconnect()
 	end
-	if text:find("^%[Îøèáêà%] {ffffff}Äâåðü çàêðûòà%.") or
-		text:find("^%[Îøèáêà%] {ffffff}Òàêîãî èíñòðóìåíòà íåò â àìáàðå%.") then
+	if text:find("^%[Ошибка%] {ffffff}Дверь закрыта%.") or
+		text:find("^%[Ошибка%] {ffffff}Такого инструмента нет в амбаре%.") then
 		nextFarm()
 	end
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("]") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("Âû âåðíóëè â àìáàð") or text:find("Âû ïîëîæèëè â àìáàð") then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("]") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("Вы вернули в амбар") or text:find("Вы положили в амбар") then
 		if getBotInterior() == 0 then
 		flood_alt = false
 		newTask(function() 
@@ -1224,9 +1230,9 @@ end
 		end)
 	end
 end
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("^%[Èíôîðìàöèÿ] {ffffff}Âû âûïîëíèëè çàäàíèå, ïîëó÷åíî: %$%d+") then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("^%[Информация] {ffffff}Вы выполнили задание, получено: %$%d+") then
 		last_quest = os.time()
-		if text:find("îòíåñèòå óðîæàé") then
+		if text:find("отнесите урожай") then
 			Tasking.defer(router.play, random(500, 2000), farm_route.."beds\\"..quest.bed.."-bed-ambar-slow", false, floodAltOn)
 		else
 			Tasking.defer(router.play, random(500, 2000), farm_route.."beds\\"..quest.bed.."-bed-ambar", false, floodAltOn)
@@ -1234,7 +1240,7 @@ end
 		-- Tasking.defer(go_to, random(500, 2000), farm.ambar, 0.98, floodAltOn)
 		setStatus(STATUS_GET_QUEST)
 	end
-	if not text:find("ãîâîðèò") and not text:find("êðè÷èò:") and not text:find("]") and not text:find("- ñêàçàë(à)") and not text:find("Óäà÷íî") and not text:find("Íåóäà÷íî") and text:find("Âû çàêîí÷èëè ñâîå ëå÷åíèå") then
+	if not text:find("говорит") and not text:find("кричит:") and not text:find("]") and not text:find("- сказал(а)") and not text:find("Удачно") and not text:find("Неудачно") and text:find("Вы закончили свое лечение") then
 		if getBotInterior() == 217 or 218 then
 		if getBotScore() >= 2 then
 			reconnect()
@@ -1263,13 +1269,13 @@ function sampev.onShowTextDraw(id, data)
 			end
 		end
 	end
-	if data.text == 'USE' or data.text == 'COOA' then
+	if data.text == 'USE' or data.text == '…CЊO‡’€O‹AЏ’' then
         newTask(function()
 			wait(1500)
 			sendClickTextdraw(id + 1, 1000)
-			sendTelegram("Óñïåøíî àêòèâèðîâàë õ3 ïåéäåé \n Ñåðâåð: " .. servers[getServerAddress()].name .. "\n Íèê: "..getBotNick())
+			sendTelegram("Успешно активировал х3 пейдей \n Сервер: " .. servers[getServerAddress()].name .. "\n Ник: "..getBotNick())
 			x3 = true
-			setWindowTitle(format("Farm (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Ôàðì Ôàðì Ôàðì ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
+			setWindowTitle(format("Farm (FermaBot Private Version by @krikkson ver 1337.1): %s - %s (%d) [%d/%d] Lvl: "..getBotScore().." / Фарм Фарм Фарм ", servers[getServerAddress()].name, getBotNick(), getBotId(), tkan, limit))
 		end)
     end
 end
@@ -1277,19 +1283,19 @@ end
 function sampev.onShowDialog(id, style, title, btn1, btn2, text)
 	print(format("dialog: \"%s\"[%d]", title, id))
 
-	if title == "{BFBBBA}" and text == "Âû ïîëó÷èëè áàí àêêàóíòà, åñëè âû íå ñîãëàñíû ñ ðåøåíèåì Àäìèíèñòðàòîðà, òî íàïèøèòå æàëîáó íà ôîðóì, ïðèëîæèâ äàííûé ñêðèíøîò.\n{2D8E35}forum.arizona-rp.com" or title == "{BFBBBA}Ýòîò àêêàóíò çàáëîêèðîâàí!" and text:find("^{FFFFFF}Âàø èãðîâîé àêêàóíò") then
+	if title == "{BFBBBA}" and text == "Вы получили бан аккаунта, если вы не согласны с решением Администратора, то напишите жалобу на форум, приложив данный скриншот.\n{2D8E35}forum.arizona-rp.com" or title == "{BFBBBA}Этот аккаунт заблокирован!" and text:find("^{FFFFFF}Ваш игровой аккаунт") then
 		if title == "{BFBBBA}" or salary > 0 then
 			local f = io.open(banned_txt, "a")
 			f:write(("%s;%s;%s;%d\n"):format(getServerAddress(), getBotNick(), pass, salary))
 			f:close()
-			sendTelegram("Çàáàíåí")
+			sendTelegram("Забанен")
 		end
 		newAcc()
 		reconnect(timeout)
 	end
 
-	if text:match("A%: (%S+) îòâåòèë âàì%:.*{cccccc}(.*)$") then
-		local admin, answ = text:match("A%: (%S+) îòâåòèë âàì%:.*{cccccc}(.*)$")
+	if text:match("A%: (%S+) ответил вам%:.*{cccccc}(.*)$") then
+		local admin, answ = text:match("A%: (%S+) ответил вам%:.*{cccccc}(.*)$")
 		sendAnswer(admin, answ)
 	end
 
@@ -1305,28 +1311,28 @@ function sampev.onShowDialog(id, style, title, btn1, btn2, text)
 		return false
 	end
 
-	if title == "{BFBBBA}Ïîäòâåðæäåíèå" then newAcc() end
+	if title == "{BFBBBA}Подтверждение" then newAcc() end
 
-	if title == "{BFBBBA}{E88813}(1/4) Ïàðîëü" then
+	if title == "{BFBBBA}{E88813}(1/4) Пароль" then
 		badnickick = 0
 		return sendDialogResponse(1, -1, pass)
-	elseif title == "{BFBBBA}Àâòîðèçàöèÿ" then
+	elseif title == "{BFBBBA}Авторизация" then
 		badnickick = 0
-		if text:find("{FF0000}Íåâåðíûé ïàðîëü!") then
+		if text:find("{FF0000}Неверный пароль!") then
 			return newAcc()
 		end
 		return sendDialogResponse(1, -1, pass)
 	end
 
-	if title == "{BFBBBA}Óïðàâëåíèå ôåðìîé" then
+	if title == "{BFBBBA}Управление фермой" then
 		if getStatus() == STATUS_NONE or status == STATUS_START then
-			print('Óñòðàèâàåìñÿ ðàáîòàö')
+			print('Устраиваемся работац')
 			flood_alt = false
 			return sendDialogResponse(1, 0, "")
 		end
 	end
 
-	if title == "{BFBBBA}Àìáàð" then
+	if title == "{BFBBBA}Амбар" then
 		-- setStatus(STATUS_GET_QUEST)
 		special_action = 0
 		flood_alt = false
@@ -1336,12 +1342,12 @@ function sampev.onShowDialog(id, style, title, btn1, btn2, text)
 		end
 		quest = findQuest(PATTERN_RAKING, PATTERN_DIGGING, PATTERN_PLANTING, PATTERN_WATERING, PATTERN_HARVESTING)
 		if quest then
-			print("âçÿë êâåñò", quest.action, quest.plant)
+			print("взял квест", quest.action, quest.plant)
 			not_quest = nil
 			timeSinceQuestTake = os.time()
 			return sendDialogResponse(1, quest.dialog1, "")
 		end
-		print("íå íàøåë çàäàíèÿ")
+		print("не нашел задания")
 		nextFarm()
 		return false
 		-- if not not_quest then not_quest = os.time() end
@@ -1349,23 +1355,23 @@ function sampev.onShowDialog(id, style, title, btn1, btn2, text)
 		-- floodAltOn()
 		-- last_alt = os.clock() + 2.0
 		-- return sendDialogResponse(0, -1, "")
-	-- elseif title == "{BFBBBA}Àìáàð | Èíñòðóìåíòû" or title == "{BFBBBA}Àìáàð | Ñåìåíà/ñàæåíöû äëÿ ïîñàäêè" then
+	-- elseif title == "{BFBBBA}Амбар | Инструменты" or title == "{BFBBBA}Амбар | Семена/саженцы для посадки" then
 	-- 	if not quest then return sendDialogResponse(0, -1, "") end
 	-- 	return sendDialogResponse(1, quest.dialog2, "")
-	elseif title == "{BFBBBA}Âûáåðèòå ðàñòåíèå" then
+	elseif title == "{BFBBBA}Выберите растение" then
 	return sendDialogResponse(text:find("1%. ") and 1 or 0, 1, "")
 	end
 
-	if title == "{BFBBBA}Âûáåðèòå åäó" then
+	if title == "{BFBBBA}Выберите еду" then
 		-- setStatus(STATUS_GET_QUEST)
 		--Tasking.defer(go_to, random(1000, 3000), vector3d(728.34, 1799.53, 1602.00), 0.98, Tasking.defer, floodAltOn, 1500)
 		return sendDialogResponse(1, 6, "")
 	end
 
-	--[[if title == "{BFBBBA}" and text:find("^{ffffff}Àäìèíèñòðàòîð .- îòâåòèë âàì:\n{cccccc}") then
+	--[[if title == "{BFBBBA}" and text:find("^{ffffff}Администратор .- ответил вам:\n{cccccc}") then
 		pause()
-		msg = text:match("îòâåòèë âàì:\n(.+)")
-		if msg:find("^{cccccc} "..getBotNick().."%["..getBotId().."] Âû òóò%? | Ââåäèòå /b Îòâåò$") then
+		msg = text:match("ответил вам:\n(.+)")
+		if msg:find("^{cccccc} "..getBotNick().."%["..getBotId().."] Вы тут%? | Введите /b Ответ$") then
 			newTask(function()
 				wait(random(1500, 6000))
 				runCommand("!diagsend 0 -1 0")
@@ -1373,7 +1379,7 @@ function sampev.onShowDialog(id, style, title, btn1, btn2, text)
 				sendInput(answers[random(1, #answers)])
 			end)
 		end
-		sendTelegram("Ïðîâåðÿåò àäìèí")
+		sendTelegram("Проверяет админ")
 	end]]
 
 	for _, dialog in ipairs(dialogs) do
@@ -1393,7 +1399,7 @@ function sampev.onDisplayGameText(style, time, text)
 	end
 if text:find("^~n~~n~~n~~n~~n~~n~~n~~n~~n~~n~~g~Jailed %d+ Sec%.$") then
 	newTask(function()
-		sendTelegram("Ïèçäà, àêêàóíò â êàòàëàøêå, ñîçäàþ íîâûé àêêàóíò")
+		sendTelegram("Пизда, аккаунт в каталашке, создаю новый аккаунт")
 		newAcc()
 		reconnect(timeout)
 	end) 
@@ -1401,7 +1407,7 @@ end
 
 	if text:find("~r~Problem!") then
 		newTask(function()
-			sendTelegram("Ìóñàðà ïîâÿçàëè áîòà, ñîçäàþ íîâûé àêêàóíò")
+			sendTelegram("Мусара повязали бота, создаю новый аккаунт")
 			newAcc()
 			reconnect(timeout)
 		end) 
@@ -1414,7 +1420,7 @@ function sampev.onConnectionBanned()
     banned_count = banned_count + 1
     if banned_count > 10 and not isBanNotificationSent then
         isBanNotificationSent = true
-        sendTelegram("Ýõ áëÿ, ñíåñëè òåáå àéïèøíèê íàõóé")
+        sendTelegram("Эх бля, снесли тебе айпишник нахуй")
         banned_count = 0
         Tasking.new(function()
             wait(0)
@@ -1507,7 +1513,7 @@ local chars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","
 
 -- telegram
 
-local ansi_decode={ -- íèæå ñìîòðèòå
+local ansi_decode={ -- ниже смотрите
 	[128]='\208\130',[129]='\208\131',[130]='\226\128\154',[131]='\209\147',[132]='\226\128\158',[133]='\226\128\166',
 	[134]='\226\128\160',[135]='\226\128\161',[136]='\226\130\172',[137]='\226\128\176',[138]='\208\137',[139]='\226\128\185',
 	[140]='\208\138',[141]='\208\140',[142]='\208\139',[143]='\208\143',[144]='\209\146',[145]='\226\128\152',
@@ -1569,10 +1575,10 @@ function asyncHttpRequest(method, url, args, resolve, reject)
             return false, response
         end
     end)(method, url, args)
-    -- Åñëè çàïðîñ áåç ôóíêöèé îáðàáîòêè îòâåòà è îøèáîê.
+    -- Если запрос без функций обработки ответа и ошибок.
     if not resolve then resolve = function() end end
     if not reject then reject = function() end end
-    -- Ïðîâåðêà âûïîëíåíèÿ ïîòîêà
+    -- Проверка выполнения потока
     Tasking.new(function()
         local runner = request_thread
         while true do
@@ -1820,7 +1826,7 @@ function loadAnswers()
 	if not fileExists(file) then
 		local f = io.open(file, "w")
 		if f then
-			local t = { ["Âîïðîñ"] = { "Îòâåò1", "Îòâåò2" } }
+			local t = { ["Вопрос"] = { "Ответ1", "Ответ2" } }
 			f:write(json.encode(t))
 			f:close()
 		else
@@ -1835,7 +1841,7 @@ function loadAnswers()
 		local loaded = json.decode(f:read("*a"))
 		local count = 0
 		for _, _ in pairs(loaded) do count = count + 1 end
-		print(string.format("Çàãðóæåíî %d îòâåòîâ", count))
+		print(string.format("Загружено %d ответов", count))
 		return loaded
 	else
 		print("Error open farm_answers.json")
@@ -1862,7 +1868,7 @@ end
 function sendAnswer(admin, answ)
 	pause()
 	local res, o = getAnswer(answ)
-	print(string.format("Àäìèí %s çàäàë âîïðîñ %s | îòâåòû %s - %d", admin, answ, (res and "íàéäåíû" or "íå íàéäåíû"), #o))
+	print(string.format("Админ %s задал вопрос %s | ответы %s - %d", admin, answ, (res and "найдены" or "не найдены"), #o))
 	reconnect()
 	newTask(function()
 		wait(random(1500, 6000))
@@ -1870,19 +1876,19 @@ function sendAnswer(admin, answ)
 		wait(random(2000, 8000))
 		if o and #o > 0 then
 			local use = o[math.random(1, #o)]
-			print(string.format("Îòïðàâëÿþ îòâåò íà âîïðîñ: %s", use))
+			print(string.format("Отправляю ответ на вопрос: %s", use))
 			sendInput(use)
 		else
-			print("Íå íàéäåíû îòâåòû íà âîïðîñ!")
+			print("Не найдены ответы на вопрос!")
 			reconnect(timeout)
 			local answers = loadDoubleAnswers()
 			math.randomseed(os.clock())
 			local use = answers[math.random(1, #answers)]
-			print(string.format("Îòïðàâëÿþ îòâåò íà âîïðîñ: %s", use))
+			print(string.format("Отправляю ответ на вопрос: %s", use))
 			sendInput(use)
 		end
 	end)
-	sendTelegram(string.format("Äîëáîåá %s çàäàë âîïðîñ %s | îòâåòû %s", admin, answ, (res and "íàéäåíû" or "íå íàéäåíû")))
+	sendTelegram(string.format("Долбоеб %s задал вопрос %s | ответы %s", admin, answ, (res and "найдены" or "не найдены")))
 end
 
 function sendMessageToChat(message)
@@ -1909,7 +1915,7 @@ function loadDoubleAnswers()
         local f = io.open(file, "w")
         if f then
             local t = {
-                "ÿ òóò"
+                "я тут"
             }
             f:write(json.encode(t))
             f:close()
@@ -1925,7 +1931,7 @@ function loadDoubleAnswers()
     local f = io.open(file, "r")
     if f then
         local loaded = json.decode(f:read("*a"))
-        print(string.format("Çàãðóæåíî %d îòâåòîâ (reserve)", #loaded))
+        print(string.format("Загружено %d ответов (reserve)", #loaded))
         return loaded
     else
         print("Error open farm_answers.json")
@@ -1939,7 +1945,7 @@ loadDoubleAnswers()
 function newAcc()
 	if not nicks_initied then
 		setBotNick("")
-		print("èìåíà è/èëè ôàìèëèè íå çàãðóæåíû. íåâîçìîæíî ñãåíåíèðîâàòü íèê")
+		print("имена и/или фамилии не загружены. невозможно сгененировать ник")
 		no_connect = true
 		return false
 	end
