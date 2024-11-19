@@ -1,4 +1,3 @@
 {
-  "latest": "1337.2",
-  "updateurl": "https://raw.githubusercontent.com/sliderts/autoupdate_ferma/refs/heads/main/scripts/private_farm.lua"
+    "version": "1337.1"
 }
